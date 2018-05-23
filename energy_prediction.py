@@ -7,11 +7,12 @@ import pytz
 
 import numpy as np
 import pandas as pd
+# xbos clients
 from xbos import get_client
 from xbos.services.hod import HodClient
 from xbos.services.mdal import *
 
-from house import IEC
+from house import IEC # Prediction model. 
 
 
 
