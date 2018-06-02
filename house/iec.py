@@ -17,6 +17,8 @@ from scipy import spatial
 from sklearn.metrics import mean_squared_error
 from tqdm import tqdm
 
+import matplotlib.pyplot as plt
+
 try:
     from .easing import *
 except:

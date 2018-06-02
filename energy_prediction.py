@@ -5,6 +5,9 @@ from __future__ import division
 import datetime
 import pytz
 
+from datetime import timedelta
+import matplotlib.pyplot as plt
+
 import numpy as np
 import pandas as pd
 # xbos clients
@@ -20,8 +23,8 @@ now = datetime.utcnow().replace(tzinfo=pytz.timezone("UTC")).astimezone(
     tz=pytz.timezone("America/Los_Angeles"))
 print now
 start = now.strftime('%Y-%m-%d %H:%M:%S %Z')
-end = '2017-09-21 00:00:00 PST'
-WINDOW = '1min'
+end = '2018-05-01 00:00:00 PST'
+WINDOW = '20min'
 
 # data clients. 
 
@@ -152,15 +155,15 @@ print meterdata.describe()
 print meterdata['House Consumption']
 
 meterdata = meterdata.tz_convert(pytz.timezone("America/Los_Angeles"))  # /??????????????????????????????????
-yesterday = now - datetime.timedelta(hours=12)
+yesterday = now - timedelta(hours=12)
 
 # Prediction happening here and should be looked at.
-prediction = IEC(meterdata[:yesterday], prediction_window=12 * 60).predict(["Baseline Finder"])
+prediction = IEC(meterdata[:yesterday], prediction_window=12 * 60).predict(["Simple Mean"])
 # prices.index = data.index
 # prices['US'] = Dollar/Kwh
 
 index = np.arange(12 * 60)
-plt.plot(index, prediction[["Baseline Finder"]], label="Energy Prediction")
+plt.plot(index, prediction[["Simple Mean"]], label="Energy Prediction")
 plt.plot(index, meterdata[["House Consumption"]][-12 * 60:], label="Ground Truth")
 plt.xlabel('Predictive horizon (Minutes)')
 plt.ylabel(r'KWh')
